@@ -12,7 +12,23 @@ namespace OnlineLearning.Services
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    listQuizs = context.Quizzes.ToList();
+                    listQuizs = context.Quizzes.Include(x => x.Questions).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return listQuizs;
+        }
+        public static List<Quiz> GetQuizzesByLessonId(int lessonId)
+        {
+            var listQuizs = new List<Quiz>();
+            try
+            {
+                using (var context = new OnlineLearningContext())
+                {
+                    listQuizs = context.Quizzes.Include(x=>x.Questions).Where(x=>x.LessonId==lessonId).ToList();
                 }
             }
             catch (Exception e)
