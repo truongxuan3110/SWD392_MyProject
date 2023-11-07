@@ -5,7 +5,7 @@ namespace OnlineLearning.Repositories
 {
     public interface ILessonRepository
     {
-        List<Lesson> GetAllLesson(int chapterId);
+        List<Lesson> GetAllLesson(int? chapterId);
         Lesson GetLessonById(int id);
         void AddLesson(Lesson p);
         void DeleteLesson(Lesson p);
@@ -24,7 +24,7 @@ namespace OnlineLearning.Repositories
             throw new NotImplementedException();
         }
 
-        public List<Lesson> GetAllLesson(int chapterId)
+        public List<Lesson> GetAllLesson(int? chapterId)
         {
             return LessonService.GetListLesson(chapterId);
         }

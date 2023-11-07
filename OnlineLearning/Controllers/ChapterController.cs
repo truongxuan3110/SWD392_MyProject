@@ -70,7 +70,7 @@ namespace OnlineLearning.Controllers
             }
         }
 
-        [HttpDelete("api/course/chapter/delete/{id}")]
+        [HttpDelete("api/course/chapter/delete")]
         public IActionResult DeleteChapter(int chapterId)
         {
             try

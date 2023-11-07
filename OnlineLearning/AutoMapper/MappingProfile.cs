@@ -14,6 +14,7 @@ namespace OnlineLearning.AutoMapper
             CreateMap<Quiz, QuizDTO>().ReverseMap();
             CreateMap<Quiz, QuizAddUpdateDTO>().ReverseMap();
             CreateMap<Chapter, ChapterAddUpdateDTO>().ReverseMap();
+            CreateMap<Lesson, LessonAddUpdateDTO>().ReverseMap();
         }
     }
 }

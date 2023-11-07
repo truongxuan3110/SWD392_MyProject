@@ -1,8 +1,8 @@
 ﻿namespace OnlineLearning.DTOs
 {
-    public class ChapterAddUpdateDTO
+    public class LessonAddUpdateDTO
     {
         public string? Title { get; set; }
-        public int CourseId { get; set; }
+        public int? ChapterId { get; set; }
     }
 }

@@ -4,14 +4,21 @@ namespace OnlineLearning.Services
 {
     public class LessonService
     {
-        public static List<Lesson> GetListLesson(int chapterId)
+        public static List<Lesson> GetListLesson(int? chapterId)
         {
             var listLesson = new List<Lesson>();
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    listLesson = context.Lessons.Where(x => x.ChapterId == chapterId).ToList();
+                    if (chapterId != null)
+                    {
+                        listLesson = context.Lessons.Where(x => x.ChapterId == chapterId).ToList();
+                    }
+                    else
+                    {
+                        listLesson = context.Lessons.ToList();
+                    }
                 }
             }
             catch (Exception e)
@@ -70,7 +77,7 @@ namespace OnlineLearning.Services
                 throw new Exception(e.Message);
             }
         }
-        public static void Delete(Quiz p)
+        public static void Delete(int lessonId)
         {
             
         }

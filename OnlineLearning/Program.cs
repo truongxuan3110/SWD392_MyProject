@@ -13,7 +13,6 @@ namespace OnlineLearning
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -25,6 +24,18 @@ namespace OnlineLearning
             builder.Services.AddTransient<IQuestionRepository, QuestionRepository>();
             builder.Services.AddTransient<IQuizRepository, QuizRepository>();
             builder.Services.AddTransient<IChapterRepository, ChapterRepository>();
+            builder.Services.AddTransient<ILessonRepository, LessonRepository>();
+
+            // Them de chay font-end
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
 
 
             // khi dùng DI ở các class thì phải thêm file config (program.cs)
@@ -38,6 +49,10 @@ namespace OnlineLearning
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
+            // Them de chay font-end
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
