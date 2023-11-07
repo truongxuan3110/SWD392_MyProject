@@ -84,7 +84,7 @@ namespace OnlineLearning.Controllers
 
 
         [HttpPut("{id}")]
-        public ActionResult UpdateCourse(int id, [FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile image)
+        public ActionResult UpdateCourse(int id, [FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile? image)
         {
             CourseDTO courseDTO = _mapper.Map<CourseDTO>(courseDtoCU);
             courseDTO.ImageUrl = Utils.CommonUtil.ConvertToBase64(image);

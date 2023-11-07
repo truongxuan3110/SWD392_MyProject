@@ -107,5 +107,13 @@ namespace OnlineLearning.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("api/category")]
+        public IActionResult GetListCategories()
+        {
+            var context = new OnlineLearningContext();
+            var list = context.Categories.ToList();
+            return Ok(list);
+        }
     }
 }
