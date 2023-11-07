@@ -8,6 +8,7 @@ namespace OnlineLearning.Repositories
     public interface IQuestionRepository
     {
         List<Question> GetAllQuestions();
+        List<Question> GetListQuestionsByQuizId(int quizId);
         Question GetQuestionById(int id);
 
         void AddQuestion(Question p);
@@ -27,6 +28,8 @@ namespace OnlineLearning.Repositories
         }
 
         public List<Question> GetAllQuestions() => QuestionService.GetQuestions();
+
+        public List<Question> GetListQuestionsByQuizId(int quizId) => QuestionService.GetQuestionsByQuizId(quizId);
 
         public Question GetQuestionById(int id) => QuestionService.FindQuestionById(id);
 

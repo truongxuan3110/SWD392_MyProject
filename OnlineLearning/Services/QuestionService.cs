@@ -22,6 +22,22 @@ namespace OnlineLearning.Services
             }
             return listQuestions;
         }
+        public static List<Question> GetQuestionsByQuizId(int quizId)
+        {
+            var listQuestions = new List<Question>();
+            try
+            {
+                using (var context = new OnlineLearningContext())
+                {
+                    listQuestions = context.Questions.Where(x=>x.QuizId==quizId).ToList();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return listQuestions;
+        }
         public static Question FindQuestionById(int questionId)
         {
             var question = new Question();

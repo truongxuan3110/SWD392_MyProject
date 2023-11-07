@@ -6,6 +6,7 @@ namespace OnlineLearning.Repositories
     public interface IQuizRepository
     {
         List<Quiz> GetAllQuizzes();
+        List<Quiz> GetAllQuizzesByLessonId(int lessonId);
         Quiz GetQuizById(int id);
 
         void AddQuiz(Quiz p);
@@ -25,6 +26,8 @@ namespace OnlineLearning.Repositories
         }
 
         public List<Quiz> GetAllQuizzes() => QuizService.GetQuizzes();
+
+        public List<Quiz> GetAllQuizzesByLessonId(int lessonId) => QuizService.GetQuizzesByLessonId(lessonId);
 
         public Quiz GetQuizById(int id) => QuizService.FindQuizById(id);
 
