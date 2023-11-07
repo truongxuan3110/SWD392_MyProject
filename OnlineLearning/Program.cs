@@ -23,6 +23,7 @@ namespace OnlineLearning
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddTransient<IQuestionRepository, QuestionRepository>();
             builder.Services.AddTransient<IQuizRepository, QuizRepository>();
+            builder.Services.AddTransient<IChapterRepository, ChapterRepository>();
 
             var app = builder.Build();
 
