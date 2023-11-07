@@ -7,6 +7,8 @@ namespace OnlineLearning.AutoMapper
     public class MappingProfile : Profile
     {
         public MappingProfile() {
+            CreateMap<Course, CourseDTO>().ReverseMap();
+            CreateMap<Course, CourseDTOInList>().ReverseMap();
             CreateMap<Question, QuestionDTO>().ReverseMap();
             CreateMap<Question, QuestionAddUpdateDTO>().ReverseMap();
             CreateMap<Quiz, QuizDTO>().ReverseMap();

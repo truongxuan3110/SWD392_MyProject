@@ -19,6 +19,7 @@ namespace OnlineLearning.Controllers
             _mapper = mapper;
             _repository = repository;
         }
+
         [HttpGet("GetAllQuestion")]
         public IActionResult GetQuestions()
         {
