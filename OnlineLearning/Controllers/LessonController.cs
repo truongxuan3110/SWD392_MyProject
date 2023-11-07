@@ -17,7 +17,5 @@ namespace OnlineLearning.Controllers
             _mapper = mapper;
             _repository = repository;
         }
-
-
     }   
 }

@@ -5,14 +5,22 @@ namespace OnlineLearning.Services
 {
     public class ChapterService
     {
-        public static List<Chapter> GetListChapter(int courseId)
+        public static List<Chapter> GetListChapter(int? courseId)
         {
             var listChapter = new List<Chapter>();
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    listChapter = context.Chapters.Where( x => x.CourseId == courseId).ToList();
+                    if (courseId != null)
+                    {
+                        listChapter = context.Chapters.Where(x => x.CourseId == courseId).ToList();
+                    }
+                    else
+                    {
+                        listChapter = context.Chapters.ToList();
+                    }
+
                 }
             }
             catch (Exception e)
@@ -58,7 +66,7 @@ namespace OnlineLearning.Services
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    var existingChapter = context.Chapters.Find(p.Id);
+                    var existingChapter = context.Chapters.SingleOrDefault(x => x.Id == p.Id);
                     if (existingChapter != null)
                     {
                         context.Entry(existingChapter).CurrentValues.SetValues(p);
@@ -71,20 +79,18 @@ namespace OnlineLearning.Services
                 throw new Exception(e.Message);
             }
         }
-        public static void Delete(Quiz p)
+        public static void DeleteChapter(int p)
         {
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    var p1 = context.Quizzes.Include(x => x.Questions)
-                        .SingleOrDefault(c => c.Id == p.Id);
-                    foreach (var question in p1.Questions.ToList())
+                    var chapter = context.Chapters.FirstOrDefault(x => x.Id == p);
+                    if (chapter != null)
                     {
-                        QuestionService.DeleteQuestion(question);
+                        context.Chapters.Remove(chapter);
+                        context.SaveChanges();
                     }
-                    context.Quizzes.Remove(p1);
-                    context.SaveChanges();
                 }
             }
             catch (Exception e)

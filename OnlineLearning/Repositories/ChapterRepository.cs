@@ -5,10 +5,10 @@ namespace OnlineLearning.Repositories
 {
     public interface IChapterRepository
     {
-        List<Chapter> GetAllChapter(int courseId);
+        List<Chapter> GetAllChapter(int ?courseId);
         Chapter GetChapterById(int id);
         void AddChapter(Chapter p);
-        void DeleteChapter(Chapter p);
+        void DeleteChapter(int p);
         void UpdateChapter(Chapter p);
     }
 
@@ -19,12 +19,12 @@ namespace OnlineLearning.Repositories
             ChapterService.AddChapter(p);
         }
 
-        public void DeleteChapter(Chapter p)
+        public void DeleteChapter(int p)
         {
-            throw new NotImplementedException();
+            ChapterService.DeleteChapter(p);
         }
 
-        public List<Chapter> GetAllChapter(int courseId)
+        public List<Chapter> GetAllChapter(int? courseId)
         {
             return ChapterService.GetListChapter(courseId);
         }
