@@ -23,6 +23,7 @@ namespace OnlineLearning.Repositories
 
         public Course Create(Course course)
         {
+            course.LastUpdated = DateTime.Now;
             _context.Courses.Add(course);
             _context.SaveChanges();
             return course;
