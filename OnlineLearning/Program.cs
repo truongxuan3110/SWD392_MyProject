@@ -26,6 +26,11 @@ namespace OnlineLearning
             builder.Services.AddTransient<IChapterRepository, ChapterRepository>();
             builder.Services.AddTransient<ILessonRepository, LessonRepository>();
 
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<CourseService>();
+
+
             // Them de chay font-end
             builder.Services.AddCors(options =>
             {
