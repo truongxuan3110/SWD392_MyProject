@@ -7,8 +7,7 @@ namespace OnlineLearning.Utils
     {
         public static string ConvertToBase64(IFormFile image)
         {
-            if (image != null && image.Length > 0)
-            {
+           
                 using (var memoryStream = new MemoryStream())
                 {
                     image.CopyTo(memoryStream);
@@ -18,8 +17,8 @@ namespace OnlineLearning.Utils
                     string base64String = Convert.ToBase64String(imageBytes);
                    return "data:image/png;base64," + base64String; // Lưu hình ảnh dưới dạng chuỗi Base64 vào DTO
                 }
-            }
-            return "";
+            
+           
         }
     }
 }

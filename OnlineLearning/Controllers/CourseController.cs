@@ -21,7 +21,7 @@ namespace OnlineLearning.Controllers
         }
 
         [HttpGet]
-        public ActionResult getAllCourse()
+        public IActionResult getAllCourse()
         {
             try
             {
@@ -37,7 +37,7 @@ namespace OnlineLearning.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult FindCourseById(int id)
+        public IActionResult FindCourseById(int id)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace OnlineLearning.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateCourse([FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile image)
+        public IActionResult CreateCourse([FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile image)
         {
             try
             {
@@ -84,11 +84,21 @@ namespace OnlineLearning.Controllers
 
 
         [HttpPut("{id}")]
-        public ActionResult UpdateCourse(int id, [FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile? image)
+        public IActionResult UpdateCourse(int id, [FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile? image)
         {
-            CourseDTO courseDTO = _mapper.Map<CourseDTO>(courseDtoCU);
-            courseDTO.ImageUrl = Utils.CommonUtil.ConvertToBase64(image);
             Course course = _courseService.GetCourse(id);
+            CourseDTO courseDTO = _mapper.Map<CourseDTO>(courseDtoCU);
+            if (image != null && image.Length > 0)
+            {
+                courseDTO.ImageUrl =  Utils.CommonUtil.ConvertToBase64(image);
+            }
+            else
+            {
+                courseDTO.ImageUrl = course.ImageUrl;
+            }
+                
+           
+         
             if (course == null)
                 return NotFound();
 
