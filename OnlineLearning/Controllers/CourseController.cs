@@ -25,7 +25,7 @@ namespace OnlineLearning.Controllers
         {
             try
             {
-                var raw_course =  _courseService.GetCourseList();
+                var raw_course = _courseService.GetCourseList();
                 var courses = _mapper.Map<List<CourseDTOInList>>(raw_course);
                 return Ok(courses);
             }
@@ -41,7 +41,7 @@ namespace OnlineLearning.Controllers
         {
             try
             {
-                var course =  _courseService.GetCourse(id);
+                var course = _courseService.GetCourse(id);
 
                 if (course == null)
                 {
@@ -57,11 +57,18 @@ namespace OnlineLearning.Controllers
             }
         }
 
+
+
+
         [HttpPost]
-        public  ActionResult CreateCourse(CourseDTO courseDto)
+        public ActionResult CreateCourse([FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile image)
         {
             try
             {
+                CourseDTO courseDto = _mapper.Map<CourseDTO>(courseDtoCU);
+
+                courseDto.ImageUrl = Utils.CommonUtil.ConvertToBase64(image); // Lưu hình ảnh dưới dạng chuỗi Base64 vào DTO
+
                 Course course = _mapper.Map<Course>(courseDto);
                 _courseService.CreateCourse(course);
                 return Ok(course);
@@ -73,21 +80,23 @@ namespace OnlineLearning.Controllers
             }
         }
 
-       
+
 
 
         [HttpPut("{id}")]
-        public  ActionResult UpdateCourse(int id, CourseDTO courseDTO)
+        public ActionResult UpdateCourse(int id, [FromForm] CourseDTOCreateUpdate courseDtoCU, IFormFile image)
         {
+            CourseDTO courseDTO = _mapper.Map<CourseDTO>(courseDtoCU);
+            courseDTO.ImageUrl = Utils.CommonUtil.ConvertToBase64(image);
             Course course = _courseService.GetCourse(id);
-            if(course == null)
+            if (course == null)
                 return NotFound();
 
             try
             {
                 Course updateCourse = _mapper.Map(courseDTO, course);
-                 _courseService.UpdateCourse(updateCourse);
-               
+                _courseService.UpdateCourse(updateCourse);
+
                 return Ok();
             }
             catch (Exception ex)
@@ -101,14 +110,14 @@ namespace OnlineLearning.Controllers
         {
             try
             {
-                var courseToDelete =  _courseService.GetCourse(id);
+                var courseToDelete = _courseService.GetCourse(id);
 
                 if (courseToDelete == null)
                 {
                     return NotFound(); // Trả về 404 Not Found nếu không tìm thấy khóa học với ID cung cấp
                 }
 
-                 _courseService.DeleteCourse(id);
+                _courseService.DeleteCourse(id);
                 return NoContent(); // Trả về 204 No Content nếu xóa thành công
             }
             catch (Exception ex)
