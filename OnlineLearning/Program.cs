@@ -1,7 +1,8 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OnlineLearning.AutoMapper;
 using OnlineLearning.Entities;
 using OnlineLearning.Repositories;
+using OnlineLearning.Services;
 
 namespace OnlineLearning
 {
@@ -24,6 +25,10 @@ namespace OnlineLearning
             builder.Services.AddTransient<IQuestionRepository, QuestionRepository>();
             builder.Services.AddTransient<IQuizRepository, QuizRepository>();
 
+
+            // khi dùng DI ở các class thì phải thêm file config (program.cs)
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<CourseService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -15,29 +15,29 @@ namespace OnlineLearning.Services
             _courseRepository = courseRepository;
         }
 
-        public async Task<IEnumerable<Course>> GetCourseList()
+        public  IEnumerable<Course> GetCourseList()
         {
-            return await _courseRepository.GetCourseList();
+            return  _courseRepository.GetCourseList();
         }
 
-        public async Task<Course> CreateCourse(Course course)
+        public Course CreateCourse(Course course)
         {
-            return await _courseRepository.Create(course);
+            return  _courseRepository.Create(course);
         }
 
-        public async Task<Course> GetCourse(int courseId)
+        public  Course GetCourse(int courseId)
         {
-            return await _courseRepository.GetById(courseId);
+            return  _courseRepository.GetById(courseId);
         }
 
-        public async Task<Course> UpdateCourse(Course course)
+        public  void UpdateCourse(Course course)
         {
-            return await _courseRepository.Update(course);
+             _courseRepository.Update(course);
         }
 
-        public async Task DeleteCourse(int courseId)
+        public void  DeleteCourse(int courseId)
         {
-            await _courseRepository.Delete(courseId);
+             _courseRepository.Delete(courseId);
         }
     }
 }

@@ -6,11 +6,11 @@ namespace OnlineLearning.Repositories
 {
     public interface ICourseRepository
     {
-        Task<IEnumerable<Course>> GetCourseList();
-        Task<Course> Create(Course course);
-        Task<Course> GetById(int courseId);
-        Task<Course> Update(Course course);
-        Task Delete(int courseId);
+        IEnumerable<Course> GetCourseList();
+        Course Create(Course course);
+        Course GetById(int courseId);
+        void Update(Course course);
+        void Delete(int courseId);
     }
     public class CourseRepository : ICourseRepository
     {
@@ -21,38 +21,39 @@ namespace OnlineLearning.Repositories
             _context = context;
         }
 
-        public async Task<Course> Create(Course course)
+        public Course Create(Course course)
         {
             _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return course;
         }
 
-        public async Task Delete(int courseId)
+        public void Delete(int courseId)
         {
-            var course = await GetById(courseId);
+            var course = GetById(courseId);
             if (course != null)
             {
                 _context.Courses.Remove(course);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
 
-        public async Task<Course> GetById(int courseId)
+        public Course GetById(int courseId)
         {
-            return await _context.Courses.FindAsync(courseId);
+            return _context.Courses.Find(courseId);
         }
 
-        public async Task<IEnumerable<Course>> GetCourseList()
+        public IEnumerable<Course> GetCourseList()
         {
-            return await _context.Courses.ToListAsync();
+            return _context.Courses.ToList();
         }
 
-        public async Task<Course> Update(Course course)
+        public void Update(Course course)
         {
+            course.LastUpdated = DateTime.Now;
             _context.Entry(course).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return course;
+            _context.SaveChanges();
+
         }
     }
 }
