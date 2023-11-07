@@ -26,6 +26,13 @@ namespace OnlineLearning.Controllers
             var result = _mapper.Map<List<QuestionDTO>>(p);
             return Ok(result);
         }
+        [HttpGet("GetListQuestionByQuizId/{id}")]
+        public IActionResult GetQuestionsByQuizId(int id)
+        {
+            var p = _repository.GetListQuestionsByQuizId(id);
+            var result = _mapper.Map<List<QuestionDTO>>(p);
+            return Ok(result);
+        }
 
         [HttpGet("GetQuestionById/{id}")]
         public IActionResult GetQuestionById(int id)

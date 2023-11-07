@@ -1,66 +1,57 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineLearning.Entities;
-using OnlineLearning.Repositories;
 
 namespace OnlineLearning.Services
 {
-    public class QuestionService
+    public class ChapterService
     {
-        public static List<Question> GetQuestions()
+        public static List<Chapter> GetListChapter(int? courseId)
         {
-            var listQuestions = new List<Question>();
+            var listChapter = new List<Chapter>();
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    listQuestions = context.Questions.ToList();
+                    if (courseId != null)
+                    {
+                        listChapter = context.Chapters.Where(x => x.CourseId == courseId).ToList();
+                    }
+                    else
+                    {
+                        listChapter = context.Chapters.ToList();
+                    }
+
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
-            return listQuestions;
+            return listChapter;
         }
-        public static List<Question> GetQuestionsByQuizId(int quizId)
+        public static Chapter FindChapterById(int chapterId)
         {
-            var listQuestions = new List<Question>();
+            var chapter = new Chapter();
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    listQuestions = context.Questions.Where(x=>x.QuizId==quizId).ToList();
+                    chapter = context.Chapters.SingleOrDefault(x => x.Id == chapterId);
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
-            return listQuestions;
+            return chapter;
         }
-        public static Question FindQuestionById(int questionId)
-        {
-            var question = new Question();
-            try
-            {
-                using (var context = new OnlineLearningContext())
-                {
-                    question = context.Questions.SingleOrDefault(x => x.Id == questionId);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-            return question;
-        }
-        public static void AddQuestion(Question p)
+        public static void AddChapter(Chapter p)
         {
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    context.Questions.Add(p);
+                    context.Chapters.Add(p);
                     context.SaveChanges();
                 }
             }
@@ -69,16 +60,16 @@ namespace OnlineLearning.Services
                 throw new Exception(e.Message);
             }
         }
-        public static void UpdateQuestion(Question p)
+        public static void UpdateChapter(Chapter p)
         {
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    var existingQuestion = context.Questions.Find(p.Id);
-                    if (existingQuestion != null)
+                    var existingChapter = context.Chapters.SingleOrDefault(x => x.Id == p.Id);
+                    if (existingChapter != null)
                     {
-                        context.Entry(existingQuestion).CurrentValues.SetValues(p);
+                        context.Entry(existingChapter).CurrentValues.SetValues(p);
                         context.SaveChanges();
                     }
                 }
@@ -88,15 +79,18 @@ namespace OnlineLearning.Services
                 throw new Exception(e.Message);
             }
         }
-        public static void DeleteQuestion(Question p)
+        public static void DeleteChapter(int p)
         {
             try
             {
                 using (var context = new OnlineLearningContext())
                 {
-                    var p1 = context.Questions.SingleOrDefault(c => c.Id == p.Id);
-                    context.Questions.Remove(p1);
-                    context.SaveChanges();
+                    var chapter = context.Chapters.FirstOrDefault(x => x.Id == p);
+                    if (chapter != null)
+                    {
+                        context.Chapters.Remove(chapter);
+                        context.SaveChanges();
+                    }
                 }
             }
             catch (Exception e)

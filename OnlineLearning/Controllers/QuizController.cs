@@ -20,9 +20,16 @@ namespace OnlineLearning.Controllers
             _repository = repository;
         }
         [HttpGet("GetAllQuiz")]
-        public IActionResult GetQuizs()
+        public IActionResult GetQuizzes()
         {
             var p = _repository.GetAllQuizzes();
+            var result = _mapper.Map<List<QuizDTO>>(p);
+            return Ok(result);
+        }
+        [HttpGet("GetAllQuizByLessonId")]
+        public IActionResult GetQuizzesByLessonId(int id)
+        {
+            var p = _repository.GetAllQuizzesByLessonId(id);
             var result = _mapper.Map<List<QuizDTO>>(p);
             return Ok(result);
         }
