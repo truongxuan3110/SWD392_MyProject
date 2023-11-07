@@ -70,12 +70,12 @@ namespace OnlineLearning.Controllers
             }
         }
 
-        [HttpDelete("api/course/chapter/Lesson/delete/{id}")]
+        [HttpDelete("api/course/chapter/Lesson/delete")]
         public IActionResult DeleteLesson(int LessonId)
         {
             try
             {
-                // _repository.DeleteLesson(LessonId);
+                 _repository.DeleteLesson(LessonId);
                 return Ok("Delete Successful!");
             }
             catch (Exception)

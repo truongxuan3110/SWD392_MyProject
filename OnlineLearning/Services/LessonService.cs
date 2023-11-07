@@ -77,9 +77,24 @@ namespace OnlineLearning.Services
                 throw new Exception(e.Message);
             }
         }
-        public static void Delete(int lessonId)
+        public static void Delete(int u)
         {
-            
+            try
+            {
+                using (var context = new OnlineLearningContext())
+                {
+                    var lesson = context.Lessons.Find(u);
+                    if (lesson != null)
+                    {
+                        context.Lessons.Remove(lesson);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
     }
 }

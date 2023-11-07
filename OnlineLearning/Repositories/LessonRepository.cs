@@ -8,7 +8,7 @@ namespace OnlineLearning.Repositories
         List<Lesson> GetAllLesson(int? chapterId);
         Lesson GetLessonById(int id);
         void AddLesson(Lesson p);
-        void DeleteLesson(Lesson p);
+        void DeleteLesson(int p);
         void UpdateLesson(Lesson p);
     }
 
@@ -19,9 +19,9 @@ namespace OnlineLearning.Repositories
             LessonService.AddLesson(p);
         }
 
-        public void DeleteLesson(Lesson p)
+        public void DeleteLesson(int p)
         {
-            throw new NotImplementedException();
+            LessonService.Delete(p);
         }
 
         public List<Lesson> GetAllLesson(int? chapterId)
